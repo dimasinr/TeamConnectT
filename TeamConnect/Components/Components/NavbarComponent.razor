@@ -1,0 +1,39 @@
+﻿@inject IJSRuntime JS
+
+<nav class="navbar">
+    <div class="nav-logo">TeamConnect</div>
+    <button @onclick="ToggleDarkMode" class="dark-mode-toggle">
+        <div class="toggle-slider @(isDarkMode ? "active" : "")">
+            <span class="toggle-icon">@darkModeIcon</span>
+        </div>
+    </button>
+</nav>
+
+@code {
+    private bool isDarkMode;
+    private string darkModeIcon = "🌙";
+    private bool isInitialized = false;
+
+    protected override async Task OnAfterRenderAsync(bool firstRender)
+    {
+        if (firstRender && !isInitialized)
+        {
+            isDarkMode = await JS.InvokeAsync<bool>("getDarkMode");
+            UpdateTheme();
+            isInitialized = true;
+            StateHasChanged();
+        }
+    }
+
+    private async Task ToggleDarkMode()
+    {
+        isDarkMode = !isDarkMode;
+        await JS.InvokeVoidAsync("setDarkMode", isDarkMode);
+        UpdateTheme();
+    }
+
+    private void UpdateTheme()
+    {
+        darkModeIcon = isDarkMode ? "☀️" : "🌙";
+    }
+}

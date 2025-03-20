@@ -1,0 +1,26 @@
+﻿@code {
+    [Parameter] public string Title { get; set; } = "Default Title";
+    [Parameter] public string Description1 { get; set; } = "Default description 1.";
+    [Parameter] public string Description2 { get; set; } = "Default description 2.";
+    [Parameter] public string ImageSrc { get; set; } = "/images/default.jpeg";
+    [Parameter] public bool IsVisible { get; set; } = false;
+}
+
+@if (IsVisible)
+{
+    <div class="interactive-content">
+        <img class="img-interactive" src="@ImageSrc" alt="Alternate Text" />
+        <div>
+            <h2>@Title</h2>
+            <div style="display: flex; align-items: center;">
+                <i style="font-size: 45px; margin-right: 15px;" class="fa-solid fa-question"></i>
+                <span>@Description1</span>
+            </div>
+            <br />
+            <div style="display: flex; align-items: center;">
+                <i style="font-size: 45px; margin-right: 15px;" class="fa-solid fa-bolt"></i>
+                <span>@Description2</span>
+            </div>
+        </div>
+    </div>
+}

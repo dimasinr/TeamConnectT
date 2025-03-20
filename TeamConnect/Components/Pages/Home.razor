@@ -1,0 +1,82 @@
+﻿@page "/"
+@inject IJSRuntime JS
+
+<PageTitle>Team Connect</PageTitle>
+
+<HeaderComponent />
+<SectionFeatComponent />
+
+<section class="interactive-section">
+    <div class="interactive-buttons">
+        <button @onclick="() => ChangeContent(0)" class="btn-interactive @(activeIndex == 0 ? "active" : "")">
+            <i class="fa-regular fa-clock"></i>
+        </button>
+        <button @onclick="() => ChangeContent(1)" class="btn-interactive @(activeIndex == 1 ? "active" : "")">
+            <i class="fa-solid fa-align-left"></i>
+        </button>
+        <button @onclick="() => ChangeContent(2)" class="btn-interactive @(activeIndex == 2 ? "active" : "")">
+            <i class="fa-solid fa-location-arrow"></i>
+        </button>
+    </div>
+
+    <CardInteractiveComponent 
+        IsVisible="@(activeIndex == 0)"
+        Title="Saves Time"
+        ImageSrc="/images/image3.jpeg"
+        Description1="Reporting consumes approximately 20-25% of an individual’s work time and 35% of managers' time, often due to inefficient methods like complex formatting, unclear communication, and redundant meeting requirements."
+        Description2="With Team Connect, streamline reporting processes to reclaim these valuable hours." />
+
+    <CardInteractiveComponent 
+        IsVisible="@(activeIndex == 1)"
+        Title="Summarizing"
+        ImageSrc="/images/image1.jpeg"
+        Description1="Managers spend up to 30% of their working hours reviewing and summarizing team progress, addressing difficulties, and consolidating feedback from various reports."
+        Description2="Team Connect’s automated summaries reduce this time to less than 5%, enabling leaders to focus on strategic decisions." />
+
+    <CardInteractiveComponent 
+        IsVisible="@(activeIndex == 2)"
+        Title="Action Planning"
+        ImageSrc="/images/image4.jpeg"
+        Description1="Team leaders often struggle to create actionable plans, spending 15-20% of their time interpreting reports and devising next steps."
+        Description2="Team Connect provides intelligent suggestions, reducing planning time by up to 50%, so teams can move forward faster and with better alignment." />
+</section>
+
+<MapsComponent 
+    MapSrc="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3965.7765519060263!2d106.61799997499104!3d-6.293070493695973!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x2e69ffbb7b370ae7%3A0x1935262ea1c4a682!2sPrimeskills!5e0!3m2!1sid!2sid!4v1742451839470!5m2!1sid!2sid"
+    Name="Primeskills Edukasi Indonesia"
+    Address="Vanya Park Lakeside G7/1, Pagedangan, Tangerang Regency, Banten 15336"
+    Phone="+62 817719100" 
+ />
+
+<FooterComponent />
+
+@code {
+    private int activeIndex = 0;
+    private System.Timers.Timer? timer;
+
+    protected override void OnInitialized()
+    {
+        timer = new System.Timers.Timer(2000)
+            {
+                AutoReset = true,
+                Enabled = true
+            };
+        timer.Elapsed += (_, _) => InvokeAsync(() =>
+        {
+            activeIndex = (activeIndex + 1) % 3;
+            StateHasChanged();
+        });
+    }
+
+    private void ChangeContent(int index)
+    {
+        activeIndex = index;
+        timer?.Stop();
+        timer?.Start();
+    }
+
+    public void Dispose()
+    {
+        timer?.Dispose();
+    }
+}
