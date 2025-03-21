@@ -1,27 +1,37 @@
 ﻿<section class="features" id="features">
-    <div class="feature">
-        <img src="/images/image1.jpeg" alt="Simplified Reporting">
-        <div>
-            <div class="title">Simplified Reporting</div>
-            <span>Eliminate the hassle of daily and weekly reports.</span>
+    @foreach (var feature in Features)
+    {
+        <div class="feature">
+            <img src="@feature.ImageSrc" alt="@feature.Title">
+            <div>
+                <div class="title">@feature.Title</div>
+                <span>@feature.Description</span>
+            </div>
         </div>
-    </div>
-    <div class="feature">
-        <img src="/images/image3.jpeg" alt="AI Powered Suggestions">
-        <div>
-            <div class="title">AI Powered Suggestions</div>
-            <span>Empower your team with actionable insights.</span>
-        </div>
-    </div>
-    <div class="feature">
-        <img src="/images/image4.jpeg" alt="Seamless Documentation">
-        <div>
-            <div class="title">Seamless Documentation</div>
-            <span>Automatically document progress and conversations.</span>
-        </div>
-    </div>
+    }
 </section>
 
 @code {
-
+    private List<Feature> Features = new()
+    {
+        new Feature
+        {
+            ImageSrc = "/images/image1.jpeg",
+            Title = "AO Simplified Reporting",
+            Description = "Eliminate the hassle of daily and weekly reports."
+        },
+        new Feature
+        {
+            ImageSrc = "/images/image3.jpeg",
+            Title = "AI Powered Suggestions",
+            Description = "Empower your team with actionable insights."
+        },
+        new Feature
+        {
+            ImageSrc = "/images/image4.jpeg",
+            Title = "Seamless Documentation",
+            Description = "Automatically document progress and conversations."
+        }
+        
+    };
 }

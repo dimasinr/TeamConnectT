@@ -7,11 +7,28 @@ window.setDarkMode = (isDark) => {
         document.body.classList.add("dark-mode");
         document.getElementById('header').classList.add("dark-mode-header");
         document.getElementById('features').classList.add("dark-mode-feat");
-        localStorage.setItem("dark-mode", "enabled");
     } else {
         document.getElementById('header').classList.remove("dark-mode-header");
         document.getElementById('features').classList.remove("dark-mode-feat");
         document.body.classList.remove("dark-mode");
-        localStorage.setItem("dark-mode", "disabled");
     }
 };
+
+document.addEventListener("DOMContentLoaded", function () {
+    let loadingContainer = document.getElementById("loading-container");
+    if (loadingContainer) {
+        loadingContainer.style.display = "flex"; 
+    }
+});
+
+window.addEventListener("load", function () {
+    setTimeout(() => {
+        let loadingContainer = document.getElementById("loading-container");
+        if (loadingContainer) {
+            loadingContainer.style.opacity = "0"; 
+            setTimeout(() => {
+                loadingContainer.style.display = "none"; 
+            }, 500);
+        }
+    }, 1500); // Tampilkan loading selama 1.5 detik sebelum menghilang
+});
